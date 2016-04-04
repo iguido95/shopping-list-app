@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment: MyString
+  amount: 1
+  list_id: 
+  item_id: 
+
+two:
+  comment: MyString
+  amount: 1
+  list_id: 
+  item_id: 

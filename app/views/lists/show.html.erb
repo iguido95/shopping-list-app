@@ -10,6 +10,33 @@
   <dd><%= @list.user_id %></dd>
 </dl>
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:comment) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th><%= model_class.human_attribute_name(:list_id) %></th>
+      <th><%= model_class.human_attribute_name(:item_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @line_items.each do |line_item| %>
+      <tr>
+        <td><%= link_to line_item.id, list_line_item_path(@list, line_item) %></td>
+        <td><%= line_item.comment %></td>
+        <td><%= line_item.amount %></td>
+        <td><%= line_item.list_id %></td>
+        <td><%= line_item.item_id %></td>
+        <td><%=l line_item.created_at %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
 <%= link_to t('.back', :default => t("helpers.links.back")),
               lists_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),

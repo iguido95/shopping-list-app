@@ -1,15 +1,22 @@
 class ListsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = current_user.lists
   end
 
   # GET /lists/1
   # GET /lists/1.json
   def show
+    unless @list.user == current_user
+      flash[:danger] = "This is not your list!"
+      redirect_to new_user_session_path
+    end
+
+    @line_items = @list.line_items
   end
 
   # GET /lists/new
@@ -25,6 +32,7 @@ class ListsController < ApplicationController
   # POST /lists.json
   def create
     @list = List.new(list_params)
+    @list.user = current_user
 
     respond_to do |format|
       if @list.save
@@ -69,6 +77,6 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:name, :user_id)
+      params.require(:list).permit(:name)
     end
 end
