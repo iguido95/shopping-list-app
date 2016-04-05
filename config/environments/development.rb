@@ -36,7 +36,7 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  # Mailer
+  # Mailer Settings
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => 'http://localhost:3000'}
 
