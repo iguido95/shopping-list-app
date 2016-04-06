@@ -1,6 +1,8 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_same_user!, only: [:show, :edit, :update, :destroy]
+
 
   # GET /lists
   # GET /lists.json
@@ -11,12 +13,11 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
-    unless @list.user == current_user
-      flash[:danger] = "This is not your list!"
-      redirect_to new_user_session_path
-    end
+    @line_items = @list.line_items.includes(:item)
 
-    @line_items = @list.line_items
+    my_items = current_user.items.order(name: :asc)
+    other_items = Item.where("user_id <> ? OR user_id IS NULL", current_user.id).order(name: :asc)
+    @items = my_items | other_items
   end
 
   # GET /lists/new
@@ -70,6 +71,13 @@ class ListsController < ApplicationController
   end
 
   private
+    def authenticate_same_user!
+      unless @list.user == current_user
+        flash[:danger] = "This is not your list!"
+        redirect_to lists_path
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_list
       @list = List.find(params[:id])

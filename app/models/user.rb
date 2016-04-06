@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   # Old association:
   # has_many :lists, dependent: :destroy
   has_many :lists
+  has_many :items
 end

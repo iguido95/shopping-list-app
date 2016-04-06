@@ -1,11 +1,15 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_same_user!, only: [:edit, :update, :destroy]
 
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @my_items = current_user.items
+    # @other_items = Item.where.not(user: current_user).or(Item.where("user_id IS NULL"))
+    #users = User.where("(first_name = ? and last_name = ?) or email = ?", first_name, last_name, email)
+    @other_items = Item.where("user_id <> ? OR user_id IS NULL", current_user.id)
   end
 
   # GET /items/1
@@ -63,6 +67,13 @@ class ItemsController < ApplicationController
   end
 
   private
+    def authenticate_same_user!
+      unless @item.user_id? && @item.user == current_user
+        flash[:danger] = "This is not your item!"
+        redirect_to items_path
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
@@ -70,6 +81,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:name, :description, :barcode, :user_id)
+      params.require(:item).permit(:name, :description, :barcode)
     end
 end

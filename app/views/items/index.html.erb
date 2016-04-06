@@ -2,6 +2,8 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+
+<h4>My Items</h4>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @items.each do |item| %>
+    <% @my_items.each do |item| %>
       <tr>
         <td><%= link_to item.id, item_path(item) %></td>
         <td><%= item.name %></td>
@@ -36,6 +38,37 @@
     <% end %>
   </tbody>
 </table>
+
+<h4>Other People's Items</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:barcode) %></th>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @other_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.id, item_path(item) %></td>
+        <td><%= item.name %></td>
+        <td><%= item.description %></td>
+        <td><%= item.barcode %></td>
+        <td><%= item.user_id %></td>
+        <td><%=l item.created_at %></td>
+        <td>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_item_path,
