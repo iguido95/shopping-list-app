@@ -3,7 +3,7 @@
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newItemModal">
   Add item
 </button>
 
@@ -17,7 +17,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th>Item</th>
       <th>Barcode</th>
       <th>Amount</th>
@@ -27,8 +26,7 @@
   <tbody>
     <% @line_items.each do |line_item| %>
       <tr>
-        <td><%= line_item.id %></td>
-        <td><%= line_item.item.name %></td>
+        <td><%= line_item.item.name %> <span class="glyphicon glyphicon-info-sign"></span></td>
         <td><%= line_item.item.barcode %></td>
         <td><%= line_item.amount %></td>
         <td></td>
@@ -50,30 +48,15 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="newItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
     <%= form_tag(list_line_items_path(@list), id: "newItemForm") do %>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Item</h4>
+        <h4 class="modal-title" id="myModalLabel">Create and Add a New Item</h4>
       </div>
       <div class="modal-body">
-	        <div class="form-group">
-			      <label for="itemSelect">Select an item</label>
-
-
-            <% items_array = @items.map { |item| [item.name, item.id] } %>
-            <label class="sr-only" for="itemSelect">Item</label>
-            <%= select_tag "itemSelect", options_for_select(items_array), { prompt: "Choose...", class: "form-control" } %>
-			    </div>
-
-
-        <a href="#" id="test-make-save-button-available">Make save available</a> <br>
-        <a href="#" id="test-make-save-button-unavailable">And unavailable</a> <br><br>
-
-        <p class="or-spacer"><span>Or create a new item:</span></p>
-
         <!-- NEW ITEM -->
         <div id="newItemFormInputWrapper">
 	        <div class="row">
