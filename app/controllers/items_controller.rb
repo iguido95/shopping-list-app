@@ -6,15 +6,27 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @my_items = current_user.items
-    # @other_items = Item.where.not(user: current_user).or(Item.where("user_id IS NULL"))
-    #users = User.where("(first_name = ? and last_name = ?) or email = ?", first_name, last_name, email)
-    @other_items = Item.where("user_id <> ? OR user_id IS NULL", current_user.id)
+    if params[:search].nil?
+      @items = current_user.items
+      # @other_items = Item.where.not(user: current_user).or(Item.where("user_id IS NULL"))
+      #users = User.where("(first_name = ? and last_name = ?) or email = ?", first_name, last_name, email)
+      @other_items = Item.where("user_id <> ? OR user_id IS NULL", current_user.id)
+    else
+      @items = Item.where("name ILIKE ? OR barcode ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%").limit(10)
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => @items, response: :ok }
+    end
   end
 
   # GET /items/1
   # GET /items/1.json
   def show
+    respond_to do |format|
+        format.html { render :show }
+        format.json { render json: @item, status: :ok, location: @item }
+    end
   end
 
   # GET /items/new

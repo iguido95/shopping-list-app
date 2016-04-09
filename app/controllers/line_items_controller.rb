@@ -28,7 +28,9 @@ class LineItemsController < ApplicationController
       redirect_to lists_path
     end
 
-    if params[:itemSelect].empty?
+    selected_item = params[:itemSelect] || ""
+
+    if selected_item.empty?
       @item = Item.create(name: params[:name], description: params[:description], barcode: params[:barcode], user_id: current_user)
     else
       @item = Item.find(params[:itemSelect])

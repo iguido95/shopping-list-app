@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :lists do
     resources :line_items
   end
-
   devise_for :users
 
 

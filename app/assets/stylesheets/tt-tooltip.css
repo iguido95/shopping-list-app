@@ -1,0 +1,123 @@
+/*
+* Thanks to: http://tympanus.net/codrops/2014/10/07/tooltip-styles-inspiration/
+*/
+
+.tt-tooltip {
+	display: inline;
+	position: relative;
+	z-index: 999;
+	cursor: pointer;
+}
+
+/* Trigger text */
+
+.tt-tooltip-item {
+	background: rgba(0,0,0,0.3);
+	cursor: pointer;
+	display: inline-block;
+	font-weight: 700;
+	padding: 0 10px;
+}
+
+/* Gap filler */
+
+.tt-tooltip-item::after {
+	content: '';
+	position: absolute;
+	width: 360px;
+	height: 20px;
+	bottom: 100%;
+	left: 50%;
+	pointer-events: none;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.tt-tooltip:hover .tt-tooltip-item::after {
+	pointer-events: auto;
+}
+
+/* tt-tooltip */
+
+.tt-tooltip-content {
+	position: absolute;
+	z-index: 9999;
+	width: 360px;
+	left: 50%;
+	margin: 20px 0 0 -180px;
+	top: 100%;
+	text-align: left;
+	font-size: 0.765em;
+	line-height: 1.4;
+	box-shadow: -5px -5px 15px rgba(48,54,61,0.2);
+	background: #2a3035;
+	opacity: 0;
+	cursor: default;
+	pointer-events: none;
+	border-radius: 4px;
+}
+
+
+
+.tt-tooltip-effect-4 .tt-tooltip-content {
+	transform-origin: 50% 0%;
+	transform: scale3d(0.7,0.3,1);
+	transition: opacity 0.2s, transform 0.2s;
+}
+
+
+/*.tt-tooltip:hover .tt-tooltip-content,*/ .tt-tooltip.is-hovered .tt-tooltip-content {
+	pointer-events: auto;
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+	transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+}
+
+/*.tt-tooltip.tt-tooltip-effect-2:hover .tt-tooltip-content,*/ .tt-tooltip.tt-tooltip-effect-2.is-hovered .tt-tooltip-content {
+	-webkit-transform: perspective(1000px) rotate3d(1,0,0,0deg);
+	transform: perspective(1000px) rotate3d(1,0,0,0deg);
+}
+
+/* Arrow */
+
+.tt-tooltip-content::after {
+	content: '';
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: transparent;
+	border-bottom-color: #2a3035;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+/* tt-tooltip content*/
+
+.tt-tooltip-content img {
+	position: relative;
+	height: 170px;
+	display: block;
+	float: left;
+	margin-right: 1em;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.tt-tooltip-text {
+	font-size: 1.2em;
+	line-height: 1.35;
+	display: block;
+	padding: 1.31em 1.21em 1.21em 0;
+	color: #fff;
+}
+
+.tt-tooltip-effect-5 .tt-tooltip-text {
+	padding: 1.4em;
+}
+
+.tt-tooltip-text a {
+	font-weight: bold;
+}

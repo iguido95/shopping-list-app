@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @my_items.each do |item| %>
+    <% @items.each do |item| %>
       <tr>
         <td><%= link_to item.id, item_path(item) %></td>
         <td><%= item.name %></td>
