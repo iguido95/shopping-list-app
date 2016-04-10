@@ -15,6 +15,8 @@ module Api
 
       if user && ActiveSupport::SecurityUtils.secure_compare(user.authentication_token, token)
         @current_user = user
+      else
+
       end
 
     end
