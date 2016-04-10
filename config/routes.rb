@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
 
-
   root 'pages#index'
 
   resources :items
   resources :lists do
     resources :line_items
   end
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
+
 
   namespace :api do
     resources :items
