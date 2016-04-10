@@ -4,11 +4,17 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   resources :items
-
   resources :lists do
     resources :line_items
   end
   devise_for :users
+
+  namespace :api do
+    resources :items
+    resources :lists do
+      resources :line_items, only: [:new, :create, :edit, :update, :destroy]
+    end
+  end
 
 
 
