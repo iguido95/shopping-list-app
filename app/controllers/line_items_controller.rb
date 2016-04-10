@@ -28,13 +28,10 @@ class LineItemsController < ApplicationController
       redirect_to lists_path
     end
 
-    selected_item = params[:itemSelect] || ""
+    @item = Item.new(name: params[:name], description: params[:description], barcode: params[:barcode])
+    @item.user = current_user
+    @item.save
 
-    if selected_item.empty?
-      @item = Item.create(name: params[:name], description: params[:description], barcode: params[:barcode], user_id: current_user)
-    else
-      @item = Item.find(params[:itemSelect])
-    end
     @line_item = LineItem.create(comment: "", amount: 1, list: @list, item: @item)
 
     redirect_to list_path(@list)
